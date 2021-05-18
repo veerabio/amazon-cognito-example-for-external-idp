@@ -45,7 +45,9 @@ class App extends Component<AppProps, State> {
 
   async componentDidMount() {
     console.log("componentDidMount");
+    console.log(window.location);
     Hub.listen('auth', async ({payload: {event, data}}) => {
+      console.log('AUTHED', window.location);
       switch (event) {
         case 'cognitoHostedUI':
           let user = await this.getUser();
@@ -304,8 +306,16 @@ class App extends Component<AppProps, State> {
 
   async signOut() {
     try {
+      console.log('Before getting credentials')
+      const session = await Auth.currentSession();
+      console.log(session);
+      const credentials = await Auth.currentCredentials();
+      console.log('accessKey: ', credentials.accessKeyId)
+      console.log('secretKey: ', credentials.secretAccessKey)
+      console.log('sessionToken: ', credentials.sessionToken)
+      console.log('identity: ', credentials.identityId)
       this.setState({authState: 'signedOut', pets: null, user: null});
-      await this.apiService.forceSignOut();
+      // await this.apiService.forceSignOut();
     } catch (e) {
       console.log(e);
     }

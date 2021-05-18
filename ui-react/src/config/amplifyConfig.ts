@@ -19,12 +19,13 @@ export default {
 
     // OPTIONAL - Enforce user authentication prior to accessing AWS resources or not
     // mandatorySignIn: false,
+    identityPoolId: autoGenConfig.identityPoolId,
 
     oauth: {
 
       domain: autoGenConfig.cognitoDomain,
 
-      scope: ['phone', 'email', 'openid', 'profile'],
+      scope: ['openid', 'email', 'profile'],
 
       redirectSignIn: autoGenConfig.appUrl,
 
